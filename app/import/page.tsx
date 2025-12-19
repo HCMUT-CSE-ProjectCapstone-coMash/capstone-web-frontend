@@ -1,10 +1,40 @@
 "use client";
 import { ImageUpload } from "@/assests/Icons"
 import { Button } from "@/components/button";
+import { SimpleInput } from "@/components/FormInput";
+import { CustomSelect } from "@/components/FormInput";
+import React, { useState } from 'react';
+
 export default function ImportPage () {
     const handleUpload = () => {
     alert("Đang tải ảnh lên...");
   };
+
+    const [selectedCategories, setSelectedCategories] = useState<string | number>("");
+    const [selectedColors, setSelectedColors] = useState<string | number>("");
+    const [selectedPattern, setSelectedPattern] = useState<string | number>("");
+      
+    const [isNumberMode, setIsNumberMode] = useState(true);
+    const sizesNumber = ["Freesize", "28", "30", "32", "34", "36", "38", "40"];
+    const sizesLetter = ["Freesize", "XS", "S", "M", "L", "XL", "2XL", "3XL"];
+  // Chọn danh sách hiển thị dựa vào state
+    const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
+    const categories = [
+    { label: "Áo", value: "ao" },
+    { label: "Quần", value: "quan" },
+    { label: "Váy", value: "vay" },
+  ];
+  const colors = [
+    { label: "Đỏ", value: "do" },
+    { label: "Xanh", value: "xanh" },
+    { label: "Vàng", value: "vang" },
+  ];
+  const patternOptions = [
+    { label: "Trơn", value: "tron" },
+    { label: "Kẻ sọc", value: "ke_soc" },
+  ];
+
+
     return (
         <div className="font-display">
             <div className="flex flex-col justify-center mt-5 px-25 gap-y-12.5"> 
@@ -43,7 +73,80 @@ export default function ImportPage () {
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex py-2.5 flex-column items-start gap-5">Ô thông tin</div>
+                        <div className="flex flex-col py-2.5 items-start gap-5">
+                            <SimpleInput label="Mã sản phẩm"/>
+                            <SimpleInput label="Tên sản phẩm"/>
+                            <div className="flex justify-between self-stretch gap-2.5">
+                                <CustomSelect
+                                    label="Phân loại"
+                                    placeholder="Chọn phân loại"
+                                    options={categories}
+                                    value={selectedCategories}
+                                    onChange={(val) => {
+                                        console.log("Giá trị đã chọn:", val);
+                                        setSelectedCategories(val)
+                                    }}
+                                />
+                                <CustomSelect
+                                    label="Màu sắc" 
+                                    placeholder="Chọn màu sắc"
+                                    options={colors}
+                                    value={selectedColors}
+                                    onChange={(val) => {
+                                        console.log("Giá trị đã chọn:", val);
+                                        setSelectedColors(val)
+                                    }}
+                                />
+                                <CustomSelect
+                                    label="Hoạ tiết" 
+                                    placeholder="Chọn hoạ tiết"
+                                    options={patternOptions}
+                                    value={selectedPattern}
+                                    onChange={(val) => {
+                                        console.log("Giá trị đã chọn:", val);
+                                        setSelectedPattern(val)
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2.5">
+                            <div className="flex flex-row justify-between text-sm text-tgray9">
+                                <div>Kích cỡ - số lượng</div>
+                                <div className="flex flex-row justify-between items-center gap-2">
+                                    <div>Size số</div>
+                                    <button
+                                        onClick={() => setIsNumberMode(!isNumberMode)}
+                                        className={`
+                                        inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none
+                                        ${isNumberMode ? "bg-[#6B21A8]" : "bg-gray-300"} 
+                                        `}
+                                    >
+                                        <span
+                                        className={`
+                                            inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 shadow-sm
+                                            ${isNumberMode ? "translate-x-6" : "translate-x-1"}
+                                        `}
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-x-8 gap-y-6 py-2.5">
+                                {currentSizes.map((size, index) => (
+                                <div key={index} className="flex flex-row items-center justify-between w-full font-display">
+                                    {/* Label Size (28, 30... hoặc S, M...) */}
+                                    <label className="text-sm font-normal text-tgray9">{size}</label>
+
+                                    {/* Input Số lượng */}
+                                    <input
+                                    type="number"
+                                    placeholder="0"
+                                    defaultValue={0}
+                                    className="w-17.5 h-7.5 px-2.5 text-center rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple focus:text-purple text-tgray5"
+                                    />
+                                </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>Danh sách</div>
