@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/assests/Icons";
+
 export function Header() {
     const pathname = usePathname();
     const navItems = [
