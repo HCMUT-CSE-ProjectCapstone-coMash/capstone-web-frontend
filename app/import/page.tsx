@@ -7,9 +7,12 @@ export default function ImportPage () {
   };
     return (
         <div className="font-display">
-            <div className="flex flex-col justify-center mt-5 px-25 gap-y-12.5">
+            <div className="flex flex-col justify-center mt-5 px-25 gap-y-12.5"> 
+                {/* div 1 chữ Nhập hàng */}
                 <div className="text-3xl font-semibold text-purple">Nhập hàng</div>
+                {/* div 2 tải hình ảnh và các trường thông tin */}
                 <div className="flex flex-row self-stretch gap-x-52.5">
+                    {/* div 2.1 tải hình ảnh */}
                     <div className="flex flex-col h-171.75 items-start gap-y-2.5">
                         <div className="text-lg font-normal">Hình ảnh sản phẩm</div>
                         <div className="w-103.75 items-start gap-y-2.5">
@@ -21,25 +24,26 @@ export default function ImportPage () {
                             </div>
                         </div>
                     </div>
+                    {/* div 2.2 Nhập thông tin */}
                     <div className="flex flex-col flex-1 gap-y-2.5">
                         <div className="flex py-2.5 justify-between items-center self-stretch">
                             <div className="text-lg">Thông tin sản phẩm</div>
                             <div className="flex justify-center items-center gap-x-2.5">
                                 <Button 
                                     onClick={handleUpload}
-                                    className="bg-purple text-white"
+                                    className="bg-purple"
                                 >
                                     <span>Thêm ảnh từ máy tính</span>
                                 </Button>
                                 <Button 
                                     onClick={handleUpload}
-                                    className="bg-pink text-white"
+                                    className="bg-pink"
                                 >
                                     <span>Thêm ảnh từ điện thoại</span>
                                 </Button>
                             </div>
                         </div>
-                        <div>Ô thông tin</div>
+                        <div className="flex py-2.5 flex-column items-start gap-5">Ô thông tin</div>
                     </div>
                 </div>
                 <div>Danh sách</div>

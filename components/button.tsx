@@ -21,7 +21,7 @@ export function Button({
 }: ButtonProps) {
 
     // Style chung cho tất cả các nút (căn giữa, hiệu ứng hover...)
-    const baseStyles = `flex py-[8px] px-[12px] gap-[4px] rounded-lg transition-colors duration-200 ${
+    const baseStyles = `flex py-[8px] px-[12px] gap-[4px] rounded-lg transition-colors duration-200 text-white font-sm font-semibold ${
         disabled ? "opacity-50 cursor-not-allowed" : "hover:opacity-90 active:scale-95"
     } ${className}`;
 
