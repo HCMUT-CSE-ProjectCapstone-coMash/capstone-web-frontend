@@ -15,8 +15,8 @@ export default function ImportPage () {
     const [selectedPattern, setSelectedPattern] = useState<string | number>("");
       
     const [isNumberMode, setIsNumberMode] = useState(true);
-    const sizesNumber = ["Freesize", "28", "30", "32", "34", "36", "38", "40"];
-    const sizesLetter = ["Freesize", "XS", "S", "M", "L", "XL", "2XL", "3XL"];
+    const sizesNumber = ["Freesize", "30", "34", "38", "28", "32", "36", "40"];
+    const sizesLetter = ["Freesize", "M", "XL", "3XL", "S", "L", "2XL", "4XL++"];
   // Chọn danh sách hiển thị dựa vào state
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
     const categories = [
@@ -147,9 +147,19 @@ export default function ImportPage () {
                                 ))}
                             </div>
                         </div>
+                        <div className="mt-2.5 flex justify-end">
+                            <Button 
+                                onClick={handleUpload}
+                                className="bg-pink"
+                                >
+                                <span>Cập nhật thông tin</span>
+                            </Button>
+                        </div>
                     </div>
                 </div>
-                <div>Danh sách</div>
+                <div className="flex flex-col gap-4.75 self-stretch">
+                    <div className="text-purple text-lg font-semibold">Danh sách sản phẩm chưa duyệt</div>
+                </div>
             </div>
         </div>
     )
