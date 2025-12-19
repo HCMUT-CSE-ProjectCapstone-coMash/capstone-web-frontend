@@ -36,11 +36,11 @@ export function Header() {
 
                 </div>
                 <div className="flex justify-between items-center">
-                    <div className="p-3"><BellIcon width={30} height={30}/></div>
+                    <div className="p-3"><BellIcon width={30} height={30} fill={"none"}/></div>
                     <div className="bg-pink text-white flex justify-between items-center rounded-lg">
-                        <div className="p-3"><UserProfileIcon width={30} height={30}/></div>
+                        <div className="p-3"><UserProfileIcon width={30} height={30} fill={"none"}/></div>
                         <div className="text-base font-semibold">Đoàn Lê Vy</div>
-                        <div className="p-3"><ArrowDownIcon width={20} height={20}/></div>
+                        <div className="p-3"><ArrowDownIcon width={20} height={20} fill={"none"}/></div>
                     </div>
                 </div>
             </div>
