@@ -1,6 +1,8 @@
 
 export default function ImportPage () {
     return (
-        <div></div>
+        <div>
+            hi
+        </div>
     )
 }
