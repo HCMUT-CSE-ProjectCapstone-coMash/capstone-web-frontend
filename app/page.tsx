@@ -1,8 +1,22 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-	return (
-		<div className="">
+  const router = useRouter();
 
-		</div>
-	);
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (!isLoggedIn) {
+      router.replace("/login");
+    }
+  }, []);
+
+  return (
+    <div>
+      Home page
+    </div>
+  );
 }

@@ -2,6 +2,7 @@
 @import "tailwindcss";
 @theme {
     --color-gray-white: #F9F9FB;
+    --color-white: #FFF;
     --color-tgray5: #808080;
     --color-tgray6: #616161;
     --color-tgray9: #0D0D0D;
@@ -9,6 +10,7 @@
     --color-light-purple: #FFB5DA;
     --color-pink: #FF3EA5;
     --color-light-pink: #FFB5DA;
+    --color-dark-red: #D10000;
 
     --font-display: "Inter", sans-serif; 
 }

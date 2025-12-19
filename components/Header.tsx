@@ -1,10 +1,13 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/assests/Icons";
+import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/public/assets/Icons";
 
 export function Header() {
     const pathname = usePathname();
+    if (pathname === "/login") {
+        return null;
+    }
     const navItems = [
         { label: "Nhà chính", href: "/" },
         { label: "Sản phẩm", href: "/product" },

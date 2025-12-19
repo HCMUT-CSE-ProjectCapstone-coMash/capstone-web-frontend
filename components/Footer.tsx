@@ -1,5 +1,5 @@
 
-import { Phone } from "@/assests/Icons"
+import { Phone } from "@/public/assets/Icons"
 
 export function Footer() {
 
