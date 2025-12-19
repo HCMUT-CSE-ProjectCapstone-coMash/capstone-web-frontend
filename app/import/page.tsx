@@ -3,7 +3,8 @@ import { ImageUpload } from "@/assests/Icons"
 import { Button } from "@/components/button";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
-import React, { useState } from 'react';
+import { useState } from 'react';
+import ProductTable from "@/components/ProductTable";
 
 export default function ImportPage () {
     const handleUpload = () => {
@@ -37,13 +38,13 @@ export default function ImportPage () {
 
     return (
         <div className="font-display">
-            <div className="flex flex-col justify-center mt-5 px-25 gap-y-12.5"> 
+            <div className="flex flex-col justify-center mt-5 mb-5 px-25 gap-y-12.5"> 
                 {/* div 1 chữ Nhập hàng */}
                 <div className="text-3xl font-semibold text-purple">Nhập hàng</div>
                 {/* div 2 tải hình ảnh và các trường thông tin */}
                 <div className="flex flex-row self-stretch gap-x-52.5">
                     {/* div 2.1 tải hình ảnh */}
-                    <div className="flex flex-col h-171.75 items-start gap-y-2.5">
+                    <div className="flex flex-col h-auto items-start gap-y-2.5">
                         <div className="text-lg font-normal">Hình ảnh sản phẩm</div>
                         <div className="w-103.75 items-start gap-y-2.5">
                             <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
@@ -159,6 +160,15 @@ export default function ImportPage () {
                 </div>
                 <div className="flex flex-col gap-4.75 self-stretch">
                     <div className="text-purple text-lg font-semibold">Danh sách sản phẩm chưa duyệt</div>
+                    <ProductTable/>
+                    <div className="flex justify-end">
+                        <Button 
+                            onClick={handleUpload}
+                            className="bg-purple"
+                            >
+                            <span>Thêm vào hệ thống</span>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
