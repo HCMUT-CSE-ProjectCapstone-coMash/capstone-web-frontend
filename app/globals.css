@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 @theme {
-    --color-gray-white: rgb(249, 249,251);
-    --color-text-color-500: rgb(128, 128, 128);
-    --color-text-color-600: rgb(97, 97, 97);
-    --color-purple: rgb(100, 32, 70);
-    --color-light-purple: rgb(222, 189, 255);
-    --color-pink: rgb(255, 62, 165);
-    --color-light-pink: rgb(255, 181, 218);
+    --color-gray-white: #F9F9FB;
+    --color-tgray5: #808080;
+    --color-tgray6: #616161;
+    --color-purple: #6420AA;
+    --color-light-purple: #FFB5DA;
+    --color-pink: #FF3EA5;
+    --color-light-pink: #FFB5DA;
 
     --font-display: "Inter", sans-serif; 
 }
