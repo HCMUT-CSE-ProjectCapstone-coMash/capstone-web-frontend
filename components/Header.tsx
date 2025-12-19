@@ -1,9 +1,19 @@
-
-import { BellIcon } from "@/assests/Icons"
-import { ArrowDownIcon } from "@/assests/Icons"
-import { UserProfileIcon } from "@/assests/Icons"
+"use client";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/assests/Icons";
 export function Header() {
-
+    const pathname = usePathname();
+    const navItems = [
+        { label: "Nhà chính", href: "/" },
+        { label: "Sản phẩm", href: "/product" },
+        { label: "Nhân viên", href: "/employeess" },
+        { label: "Nhập hàng", href: "/import" },
+        { label: "Bán hàng", href: "/sales" },
+        { label: "Khuyến mãi", href: "/promotions" },
+        { label: "Đổi trả hàng", href: "/returns" },
+        { label: "Khách hàng nợ", href: "/debt" },
+    ];
     return (
         <div className="bg-gray-white flex-col justify-center items-center px-6.25 font-display">
             <div className="flex px-3.75 h-24 items-center justify-between">
@@ -11,14 +21,18 @@ export function Header() {
                     <span className="text-purple">Mash</span>
                 </div>
                 <div className="flex font-medium text-lg text-tgray5 justify-between items-center">
-                    <div className="px-3 py-2">Nhà chính</div>
-                    <div className="px-3 py-2">Sản phẩm</div>
-                    <div className="px-3 py-2">Nhân viên</div>
-                    <div className="px-3 py-2">Nhập hàng</div>
-                    <div className="px-3 py-2">Bán hàng</div>
-                    <div className="px-3 py-2">Khuyến mãi</div>
-                    <div className="px-3 py-2">Đổi trả hàng</div>
-                    <div className="px-3 py-2">Khách hàng nợ</div>
+                    {navItems.map((item) => {
+                        const isActive = item.href === pathname;
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`px-3 py-2 ${isActive ? "text-tgray9 font-semibold" : ""}`}
+                            >
+                                {item.label}
+                            </Link>
+                        )
+                    })}
 
                 </div>
                 <div className="flex justify-between items-center">
