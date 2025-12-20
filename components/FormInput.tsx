@@ -44,9 +44,9 @@ export function SizeInput({ label, value, onChange, type = "number", isActive = 
       <input
         type={type}
         className={`w-17.5 h-7.5 px-2.5 text-center rounded-lg border-[0.5px] border-solid focus:outline-none
+            [&::-webkit-inner-spin-button]:opacity-100
             ${isActive? "text-purple border-purple ring-1 ring-purple" : "text-tgray5 border-tgray5 ring-1 focus:border-purple focus:ring-purple focus:text-purple"}`}
         value={value}
-        defaultValue={0}
         onChange={onChange}
       />
     </div>
