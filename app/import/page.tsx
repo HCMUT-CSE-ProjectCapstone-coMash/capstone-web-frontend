@@ -4,6 +4,7 @@ import { Button } from "@/components/ButtonComponent";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
 import { SizeInput } from "@/components/FormInput";
+import { PrizeInput } from "@/components/FormInput";
 import { useState, useMemo, useRef } from 'react';
 import ProductTable from "@/components/ProductTable";
 
@@ -22,6 +23,8 @@ export default function ImportPage () {
 
     const [productCode, setProductCode] = useState("");
     const [productName, setProductName] = useState("");
+    const [productPrizeIn, setPrizeIn] = useState("");
+    const [productPrizeOut, setPrizeOut] = useState("");
     const [isNumberMode, setIsNumberMode] = useState(true);
 
     const [selectedCategories, setSelectedCategories] = useState<string | number | undefined>(undefined);
@@ -37,17 +40,28 @@ export default function ImportPage () {
         }));
     };
 
+    const formatCurrency = (value: string) => {
+        if (!value) return "";
+        // Bước 1: Xóa tất cả ký tự không phải số
+        const numberString = value.replace(/\D/g, ""); 
+        
+        // Bước 2: Dùng Regex thêm dấu chấm phân cách hàng nghìn
+        return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
+
     const isFormValid = useMemo(() => {
         const hasAtLeastOneSize = Object.values(quantities).some(qty => qty > 0);
         return (
             productCode.trim() !== "" &&       // Mã không rỗng
             productName.trim() !== "" &&       // Tên không rỗng
+            productPrizeIn.trim() !== "" && 
+            productPrizeOut.trim() !== "" &&
             selectedCategories &&              // Đã chọn phân loại
             selectedColors &&                  // Đã chọn màu
             selectedPattern &&                 // Đã chọn hoạ tiết
             hasAtLeastOneSize                  
         );
-    }, [productCode, productName, selectedCategories, selectedColors, selectedPattern, quantities]);
+    }, [productCode, productName, productPrizeIn, productPrizeOut, selectedCategories, selectedColors, selectedPattern, quantities]);
 
   // Chọn danh sách hiển thị dựa vào state
     const sizesNumber = ["Freesize", "30", "34", "38", "28", "32", "36", "40"];
@@ -150,7 +164,26 @@ export default function ImportPage () {
                                 type="text"
                                 onChange={(e) => setProductName(e.target.value)}
                             />
-
+                            <div className="flex flex-row justify-between w-full gap-x-5 items-center">
+                                <PrizeInput 
+                                    label="Giá bán" 
+                                    value={productPrizeIn} 
+                                    type="text" 
+                                    onChange={(e) => {
+                                        const formattedValue = formatCurrency(e.target.value);
+                                        setPrizeIn(formattedValue);
+                                    }}
+                                />
+                                <PrizeInput 
+                                    label="Giá bán" 
+                                    value={productPrizeOut}
+                                    type="text"
+                                    onChange={(e) => {
+                                        const formattedValue = formatCurrency(e.target.value);
+                                        setPrizeOut(formattedValue);
+                                    }}
+                                />
+                            </div>
                             <div className="flex justify-between self-stretch gap-2.5">
                                 <CustomSelect
                                     label="Phân loại"
@@ -212,7 +245,11 @@ export default function ImportPage () {
                                         label={size}
                                         value={String((quantities[size]) || 0)}
                                         type="number"
-                                        onChange={(e) => handleQuantityChange(size, e.target.value)}
+                                        onChange={(e) => {
+                                            const cleanVal = e.target.value.replace(/[^0-9]/g, '');
+                                            const numVal = cleanVal === '' ? 0 : Number(cleanVal);
+                                           handleQuantityChange(size, String(numVal));
+                                        }}
                                         isActive = {quantities[size] > 0}
                                     />
                                 </div>

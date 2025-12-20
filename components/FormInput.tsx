@@ -9,6 +9,14 @@ interface SimpleInputProps {
   isActive?: boolean;
 }
 
+interface PrizeInputProps {
+  label: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: "text" ;
+  isActive?: boolean;
+}
+
 interface Option {
   label: string;
   value: string | number;
@@ -60,6 +68,25 @@ export function SizeInput({ label, value, onChange, type = "number", isActive = 
   );
 }
 
+export function PrizeInput({ label, value, onChange, type = "text" }: PrizeInputProps) {
+  return (
+    <div className="flex flex-col gap-y-2.5 w-full font-display">
+      <label className="text-sm font-normal text-tgray9">{label}</label>
+    <div className="relative w-full">
+      <input
+        type={type}
+        className="w-full h-12 pl-2.5 pr-12 rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple transition-all"
+        value={value}
+        onChange={onChange}
+      />
+      
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none select-none">
+        VND
+      </span>
+    </div>
+    </div>
+  );
+}
 
 export function CustomSelect({
   label,
