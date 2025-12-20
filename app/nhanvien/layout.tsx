@@ -1,8 +1,17 @@
+"use client";
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { withBasePath } from "@/ultis/withBasePath";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function EmployeeLayout({ children }: { children: React.ReactNode }) {
+    const { loading } = useAuth("/auth");
+
+    if (loading) {
+        return (
+            <div></div>
+        )
+    }
 
     const navItems = withBasePath("/nhanvien", [
         { label: "Nhà chính", href: "" },
