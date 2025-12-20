@@ -1,6 +1,6 @@
 "use client";
 import { ImageUpload } from "@/assests/Icons"
-import { Button } from "@/components/button";
+import { Button } from "@/components/ButtonComponent";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
 import { SizeInput } from "@/components/FormInput";
@@ -149,11 +149,13 @@ export default function ImportPage () {
                             <SimpleInput 
                                 label="Mã sản phẩm" 
                                 value={productCode}
+                                type="text"
                                 onChange={(e) => setProductCode(e.target.value)}
                             />
                             <SimpleInput 
                                 label="Tên sản phẩm" 
                                 value={productName}
+                                type="text"
                                 onChange={(e) => setProductName(e.target.value)}
                             />
 
@@ -216,7 +218,8 @@ export default function ImportPage () {
                                 <div key={index}>
                                     <SizeInput 
                                         label={size}
-                                        value={(quantities[size] || 0).toString()}
+                                        value={(quantities[size] || 0)}
+                                        type="number"
                                         onChange={(e: any) => handleQuantityChange(size, e.target.value)}
                                         isActive = {quantities[size] > 0}
                                     />

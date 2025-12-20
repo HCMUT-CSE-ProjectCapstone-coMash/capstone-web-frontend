@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { SmallArrowDownIcon } from "@/assests/Icons";
 
-// --- Interfaces (Giữ nguyên) ---
 interface SimpleInputProps {
   label: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: "text" | "number";
+  type: "text" ;
   isActive?: boolean;
 }
 
@@ -13,13 +13,20 @@ interface Option {
   label: string;
   value: string | number;
 }
-
 interface CustomSelectProps {
   label: string;
   options: Option[];
   value?: string | number;
   placeholder?: string;
   onChange: (value: string | number) => void;
+}
+
+interface SizeInputProps {
+  label: string;
+  value: number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: "number" ;
+  isActive?: boolean;
 }
 
 // --- SimpleInput (Giữ nguyên) ---
@@ -37,7 +44,7 @@ export function SimpleInput({ label, value, onChange, type = "text" }: SimpleInp
   );
 }
 
-export function SizeInput({ label, value, onChange, type = "number", isActive = false }: SimpleInputProps) {
+export function SizeInput({ label, value, onChange, type = "number", isActive = false }: SizeInputProps) {
   return (
     <div className="flex flex-row items-center justify-between font-display">
       <label className={`text-sm font-normal ${isActive ? "text-purple font-medium" : "text-tgray9"}`}>{label}</label>
@@ -103,22 +110,13 @@ export function CustomSelect({
           {selectedOption ? selectedOption.label : placeholder || "Chọn..."}
         </span>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 13 7"
-          strokeWidth={1}
-          stroke="currentColor"
-          className={`w-[11.667px] h-[5.833px] text-tgray5 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12.1667 0.5L6.33333 6.33333L0.5 0.5"
+          <SmallArrowDownIcon
+            width={11.667}
+            height={5.833}
+            fill={"none"}
+            // Thêm className để xử lý việc xoay
+            className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           />
-        </svg>
       </div>
 
       {/* Dropdown Menu */}
