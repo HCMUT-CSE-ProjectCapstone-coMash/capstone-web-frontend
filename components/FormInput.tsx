@@ -36,6 +36,21 @@ export function SimpleInput({ label, value, onChange, type = "text" }: SimpleInp
   );
 }
 
+export function SizeInput({ label, value, onChange, type = "number" }: SimpleInputProps) {
+  return (
+    <div className="flex flex-row items-center justify-between font-display">
+      <label className="text-sm font-normal text-tgray9">{label}</label>
+      <input
+        type={type}
+        className="w-17.5 h-7.5 px-2.5 text-center rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple focus:text-purple text-tgray5"
+        value={value}
+        defaultValue={0}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
+
 // --- CustomSelect (Đã chỉnh sửa Header) ---
 export function CustomSelect({
   label,

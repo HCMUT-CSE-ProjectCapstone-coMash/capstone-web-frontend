@@ -3,22 +3,48 @@ import { ImageUpload } from "@/assests/Icons"
 import { Button } from "@/components/button";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
-import { useState } from 'react';
+import { SizeInput } from "@/components/FormInput";
+import { useState, useMemo } from 'react';
 import ProductTable from "@/components/ProductTable";
 
 export default function ImportPage () {
     const handleUpload = () => {
     alert("Đang tải ảnh lên...");
   };
-
-    const [selectedCategories, setSelectedCategories] = useState<string | number>("");
-    const [selectedColors, setSelectedColors] = useState<string | number>("");
-    const [selectedPattern, setSelectedPattern] = useState<string | number>("");
-      
+    const [productCode, setProductCode] = useState("");
+    const [productName, setProductName] = useState("");
     const [isNumberMode, setIsNumberMode] = useState(true);
+
+    const [selectedCategories, setSelectedCategories] = useState<string | number | undefined>(undefined);
+    const [selectedColors, setSelectedColors] = useState<string | number | undefined>(undefined);
+    const [selectedPattern, setSelectedPattern] = useState<string | number | undefined>(undefined);
+    const [quantities, setQuantities] = useState<Record<string, number>>({});
+      
+    const handleQuantityChange = (size: string, value: string) => {
+        const numValue = parseInt(value) || 0;
+        setQuantities(prev => ({
+            ...prev,
+            [size]: numValue
+        }));
+    };
+
+
+
+    const isFormValid = useMemo(() => {
+        const hasAtLeastOneSize = Object.values(quantities).some(qty => qty > 0);
+        return (
+            productCode.trim() !== "" &&       // Mã không rỗng
+            productName.trim() !== "" &&       // Tên không rỗng
+            selectedCategories &&              // Đã chọn phân loại
+            selectedColors &&                  // Đã chọn màu
+            selectedPattern &&                 // Đã chọn hoạ tiết
+            hasAtLeastOneSize                  
+        );
+    }, [productCode, productName, selectedCategories, selectedColors, selectedPattern, quantities]);
+
+  // Chọn danh sách hiển thị dựa vào state
     const sizesNumber = ["Freesize", "30", "34", "38", "28", "32", "36", "40"];
     const sizesLetter = ["Freesize", "M", "XL", "3XL", "S", "L", "2XL", "4XL++"];
-  // Chọn danh sách hiển thị dựa vào state
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
     const categories = [
     { label: "Áo", value: "ao" },
@@ -75,8 +101,17 @@ export default function ImportPage () {
                             </div>
                         </div>
                         <div className="flex flex-col py-2.5 items-start gap-5">
-                            <SimpleInput label="Mã sản phẩm"/>
-                            <SimpleInput label="Tên sản phẩm"/>
+                            <SimpleInput 
+                                label="Mã sản phẩm" 
+                                value={productCode}
+                                onChange={(e) => setProductCode(e.target.value)}
+                            />
+                            <SimpleInput 
+                                label="Tên sản phẩm" 
+                                value={productName}
+                                onChange={(e) => setProductName(e.target.value)}
+                            />
+
                             <div className="flex justify-between self-stretch gap-2.5">
                                 <CustomSelect
                                     label="Phân loại"
@@ -131,35 +166,37 @@ export default function ImportPage () {
                                     </button>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-4 gap-x-8 gap-y-6 py-2.5">
+                            <div className="grid grid-cols-4 gap-x-20 gap-y-6 w-full py-2.5">
                                 {currentSizes.map((size, index) => (
-                                <div key={index} className="flex flex-row items-center justify-between w-full font-display">
-                                    {/* Label Size (28, 30... hoặc S, M...) */}
-                                    <label className="text-sm font-normal text-tgray9">{size}</label>
-
-                                    {/* Input Số lượng */}
-                                    <input
-                                    type="number"
-                                    placeholder="0"
-                                    defaultValue={0}
-                                    className="w-17.5 h-7.5 px-2.5 text-center rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple focus:text-purple text-tgray5"
+                                <div key={index}>
+                                    <SizeInput 
+                                        label={size}
+                                        value={(quantities[size] || 0).toString()}
+                                        onChange={(e: any) => handleQuantityChange(size, e.target.value)}
                                     />
                                 </div>
                                 ))}
                             </div>
                         </div>
                         <div className="mt-2.5 flex justify-end">
-                            <Button 
+                            <Button
                                 onClick={handleUpload}
-                                className="bg-pink"
-                                >
-                                <span>Cập nhật thông tin</span>
+                                disabled={!isFormValid} // Vô hiệu hóa nút nếu form chưa điền đủ
+                                className={`
+                                    transition-colors duration-300
+                                    ${isFormValid 
+                                        ? "bg-pink hover:bg-pink/90 text-white" // Style khi đủ dữ liệu
+                                        : "bg-light-pink  text-white cursor-not-allowed" // Style khi thiếu dữ liệu (màu xám)
+                                    }
+                                `}
+                            >
+                                <span>Thêm vào danh sách sản phẩm mới</span>
                             </Button>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col gap-4.75 self-stretch">
-                    <div className="text-purple text-lg font-semibold">Danh sách sản phẩm chưa duyệt</div>
+                    <div className="text-purple text-lg font-semibold">Danh sách sản phẩm mới</div>
                     <ProductTable/>
                     <div className="flex justify-end">
                         <Button 
