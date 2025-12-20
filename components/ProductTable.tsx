@@ -1,30 +1,10 @@
 
+interface ProductTableProps {
+    data?: any[]; // Nhận mảng dữ liệu từ ImportPage
+}
 
-const ProductTable = () => {
+const ProductTable = ({ data = [] }: ProductTableProps) => {
   // Dữ liệu mô phỏng theo hình ảnh
-  const products = [
-    {
-      id: "DAM-1203",
-      name: "Đầm đen dáng...",
-      category: "Đầm",
-      color: "Đen",
-      pattern: "Hoa văn",
-    },
-    {
-      id: "QUAN-0501",
-      name: "Quần jean dài",
-      category: "Quần",
-      color: "Xanh",
-      pattern: "Trơn",
-    },
-    {
-      id: "AOTHUN-051",
-      name: "Áo thun tay ngắn",
-      category: "Áo",
-      color: "Đỏ",
-      pattern: "Sọc",
-    },
-  ];
 
   return (
     <div className="w-full bg-white">
@@ -39,7 +19,7 @@ const ProductTable = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => (
+          {data.map((product, index) => (
             <tr key={index} className="border-b border-tgray5">
               <td className="py-4 text-black">{product.id}</td>
               <td className="py-4 text-black">{product.name}</td>

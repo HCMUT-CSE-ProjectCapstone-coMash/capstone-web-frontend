@@ -4,13 +4,30 @@ import { Button } from "@/components/button";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
 import { SizeInput } from "@/components/FormInput";
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import ProductTable from "@/components/ProductTable";
 
 export default function ImportPage () {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
     const handleUpload = () => {
-    alert("Đang tải ảnh lên...");
-  };
+        fileInputRef.current?.click();
+    };
+    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            // Tạo URL xem trước ảnh
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
+            setImageFile(file);
+            
+            // Log để kiểm tra
+            console.log("File đã chọn:", file); 
+        }
+    };
+
     const [productCode, setProductCode] = useState("");
     const [productName, setProductName] = useState("");
     const [isNumberMode, setIsNumberMode] = useState(true);
@@ -19,7 +36,7 @@ export default function ImportPage () {
     const [selectedColors, setSelectedColors] = useState<string | number | undefined>(undefined);
     const [selectedPattern, setSelectedPattern] = useState<string | number | undefined>(undefined);
     const [quantities, setQuantities] = useState<Record<string, number>>({});
-      
+    
     const handleQuantityChange = (size: string, value: string) => {
         const numValue = parseInt(value) || 0;
         setQuantities(prev => ({
@@ -27,8 +44,6 @@ export default function ImportPage () {
             [size]: numValue
         }));
     };
-
-
 
     const isFormValid = useMemo(() => {
         const hasAtLeastOneSize = Object.values(quantities).some(qty => qty > 0);
@@ -46,6 +61,7 @@ export default function ImportPage () {
     const sizesNumber = ["Freesize", "30", "34", "38", "28", "32", "36", "40"];
     const sizesLetter = ["Freesize", "M", "XL", "3XL", "S", "L", "2XL", "4XL++"];
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
+
     const categories = [
     { label: "Áo", value: "ao" },
     { label: "Quần", value: "quan" },
@@ -60,7 +76,29 @@ export default function ImportPage () {
     { label: "Trơn", value: "tron" },
     { label: "Kẻ sọc", value: "ke_soc" },
   ];
-
+  const products = [
+    {
+      id: "DAM-1203",
+      name: "Đầm đen dáng...",
+      category: "Đầm",
+      color: "Đen",
+      pattern: "Hoa văn",
+    },
+    {
+      id: "QUAN-0501",
+      name: "Quần jean dài",
+      category: "Quần",
+      color: "Xanh",
+      pattern: "Trơn",
+    },
+    {
+      id: "AOTHUN-051",
+      name: "Áo thun tay ngắn",
+      category: "Áo",
+      color: "Đỏ",
+      pattern: "Sọc",
+    },
+  ];
 
     return (
         <div className="font-display">
@@ -78,6 +116,13 @@ export default function ImportPage () {
                                 <div className="text-xl font-normal  text-picture">Kéo & thả hình ảnh muốn tải lên</div>
                                 <div className="text-lg font-medium underline decoration-solid decoration-auto text-picture">hoặc từ máy tính của bạn</div>
                                 <div className="text-lg font-medium underline decoration-solid decoration-auto text-picture">hoặc từ điện thoại của bạn</div>
+                                <input 
+                                    type="file" 
+                                    ref={fileInputRef} 
+                                    onChange={onFileChange} 
+                                    className="hidden" // Class hidden của Tailwind để ẩn input
+                                    accept="image/*"   // Chỉ cho phép chọn ảnh
+                                />
                             </div>
                         </div>
                     </div>
@@ -93,7 +138,7 @@ export default function ImportPage () {
                                     <span>Thêm ảnh từ máy tính</span>
                                 </Button>
                                 <Button 
-                                    onClick={handleUpload}
+                                    // onClick={}
                                     className="bg-pink"
                                 >
                                     <span>Thêm ảnh từ điện thoại</span>
@@ -198,17 +243,24 @@ export default function ImportPage () {
                 </div>
                 <div className="flex flex-col gap-4.75 self-stretch">
                     <div className="text-purple text-lg font-semibold">Danh sách sản phẩm mới</div>
-                    <ProductTable/>
+                    <ProductTable data={products}/>
                     <div className="flex justify-end">
                         <Button 
                             onClick={handleUpload}
-                            className="bg-purple"
-                            >
+                            disabled={products.length === 0}
+                            className={`transition-colors duration-300
+                            ${products.length > 0 
+                            ? "bg-purple hover:bg-purple/90 text-white" // Có dữ liệu: Màu tím
+                            : "bg-light-purple text-white cursor-not-allowed" // Rỗng: Màu xám (dùng tgray5 hoặc gray-400)
+                                }
+                            `}
+                        >
                             <span>Thêm vào hệ thống</span>
                         </Button>
                     </div>
                 </div>
             </div>
+            
         </div>
     )
 }

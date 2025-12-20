@@ -53,7 +53,7 @@ export function SizeInput({ label, value, onChange, type = "number", isActive = 
   );
 }
 
-// --- CustomSelect (Đã chỉnh sửa Header) ---
+
 export function CustomSelect({
   label,
   options,
