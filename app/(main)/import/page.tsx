@@ -73,18 +73,31 @@ export default function ImportPage () {
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
 
     const categories = [
-    { label: "Áo", value: "ao" },
-    { label: "Quần", value: "quan" },
-    { label: "Váy", value: "vay" },
+    { label: "Đầm", value: "dress" },
+    { label: "Áo", value: "shirt" },
+    { label: "Quần", value: "pants" },
+    { label: "Váy", value: "skirt" },
   ];
   const colors = [
-    { label: "Đỏ", value: "do" },
-    { label: "Xanh", value: "xanh" },
-    { label: "Vàng", value: "vang" },
+    { label: "Đen", value: "black" },
+    { label: "Trắng", value: "white" },
+    { label: "Xám", value: "gray" },
+    { label: "Đỏ", value: "red" },
+    { label: "Cam", value: "orange" },
+    { label: "Vàng", value: "yellow" },
+    { label: "Xanh Lá", value: "green" },
+    { label: "Xanh Dương", value: "blue" },
+    { label: "Xanh Ngọc", value: "marine" },
+    { label: "Tím", value: "purple" },
+    { label: "Hồng", value: "pink" },
+    { label: "Nâu", value: "brown" },
   ];
   const patternOptions = [
-    { label: "Trơn", value: "tron" },
-    { label: "Kẻ sọc", value: "ke_soc" },
+    { label: "Trơn", value: "plain" },
+    { label: "Sọc Dọc", value: "striped" },
+    { label: "Sọc Ngang", value: "horizontal_striped" },
+    { label: "Caro", value: "caro" },
+    { label: "Hoa Văn", value: "flower" },
   ];
   const products = [
     {
