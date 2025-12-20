@@ -5,6 +5,17 @@ import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/assests/Icons";
 
 export function Header() {
     const pathname = usePathname();
+
+    if (pathname === "/auth") {
+        return (
+            <header className="h-24 flex items-center justify-center bg-gray-white">
+                <p className="font-display font-semibold text-3xl text-pink">
+                    co<span className="text-purple">Mash</span>
+                </p>
+            </header>
+        )
+    }
+
     const navItems = [
         { label: "Nhà chính", href: "/" },
         { label: "Sản phẩm", href: "/product" },
@@ -15,6 +26,7 @@ export function Header() {
         { label: "Đổi trả hàng", href: "/returns" },
         { label: "Khách hàng nợ", href: "/debt" },
     ];
+    
     return (
         <div className="bg-gray-white flex-col justify-center items-center px-6.25 font-display">
             <div className="flex px-3.75 h-24 items-center justify-between">
@@ -45,7 +57,6 @@ export function Header() {
                     </div>
                 </div>
             </div>
-            
         </div>
     )
 }

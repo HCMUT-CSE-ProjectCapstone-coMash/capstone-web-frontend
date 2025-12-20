@@ -1,17 +1,17 @@
+"use client";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Provider } from "react-redux";
+import { store } from "@/store";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+
     return (
-        <html lang="en">
-            <body className="flex flex-col min-h-screen">
-                <Header/>
-                <div className="flex-1">
+        <Provider store={store}>
+            <html lang="en">
+                <body>
                     {children}
-                </div>
-                <Footer/>
-            </body>
-        </html>
+                </body>
+            </html>
+        </Provider>
     );
 }
