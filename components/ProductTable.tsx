@@ -7,6 +7,8 @@ export interface Product {
   category: string;
   color: string;
   pattern: string;
+  prizeIn: string;
+  prizeOut: string
 }
 
 // 2. Định nghĩa Props cho Component (nhận vào danh sách sản phẩm)
@@ -21,7 +23,9 @@ const ProductTable = ({ data = [] }: ProductTableProps) => {
     "Tên sản phẩm", 
     "Phân loại", 
     "Màu sắc", 
-    "Hoạ tiết"
+    "Hoạ tiết",
+    "Giá nhập",
+    "Giá bán"
   ];
 
   // Class chung cho các ô để dễ quản lý style
@@ -51,6 +55,8 @@ const ProductTable = ({ data = [] }: ProductTableProps) => {
                 <td className={cellClass}>{product.category}</td>
                 <td className={cellClass}>{product.color}</td>
                 <td className={cellClass}>{product.pattern}</td>
+                <td className={cellClass}>{product.prizeIn}</td>
+                <td className={cellClass}>{product.prizeOut}</td>
               </tr>
             ))
           ) : (

@@ -42,10 +42,7 @@ export default function ImportPage () {
 
     const formatCurrency = (value: string) => {
         if (!value) return "";
-        // Bước 1: Xóa tất cả ký tự không phải số
         const numberString = value.replace(/\D/g, ""); 
-        
-        // Bước 2: Dùng Regex thêm dấu chấm phân cách hàng nghìn
         return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
 
@@ -89,6 +86,8 @@ export default function ImportPage () {
       category: "Đầm",
       color: "Đen",
       pattern: "Hoa văn",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
     },
     {
       id: "QUAN-0501",
@@ -96,6 +95,8 @@ export default function ImportPage () {
       category: "Quần",
       color: "Xanh",
       pattern: "Trơn",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
     },
     {
       id: "AOTHUN-051",
@@ -103,6 +104,8 @@ export default function ImportPage () {
       category: "Áo",
       color: "Đỏ",
       pattern: "Sọc",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
     },
   ];
 
