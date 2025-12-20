@@ -2,7 +2,6 @@ interface IconProps {
     width: number,
     height: number,
     fill: string
-    className?: string;
 }
 
 export function BellIcon({ width, height, fill }: IconProps) {
@@ -19,15 +18,6 @@ export function ArrowDownIcon({ width, height, fill }: IconProps) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill={fill} viewBox="0 0 20 20">
             <path d="M15.8327 7.5L9.99935 13.3333L4.16602 7.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-    )
-}
-
-export function SmallArrowDownIcon({ width, height, fill, className }: IconProps) {
-    
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill={fill} className={className} viewBox="0 0 13 7">
-            <path d="M12.1667 0.5L6.33333 6.33333L0.5 0.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
     )
 }
