@@ -1,11 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
+import { SmallArrowDownIcon } from "@/assests/Icons";
 
-// --- Interfaces (Giữ nguyên) ---
 interface SimpleInputProps {
   label: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: "text" | "number";
+  type: "text" ;
+  isActive?: boolean;
+}
+
+interface PrizeInputProps {
+  label: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: "text" ;
   isActive?: boolean;
 }
 
@@ -13,13 +21,20 @@ interface Option {
   label: string;
   value: string | number;
 }
-
 interface CustomSelectProps {
   label: string;
   options: Option[];
   value?: string | number;
   placeholder?: string;
   onChange: (value: string | number) => void;
+}
+
+interface SizeInputProps {
+  label: string;
+  value: number | string; // Sửa ở đây: cho phép cả number và string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: "number";
+  isActive?: boolean;
 }
 
 // --- SimpleInput (Giữ nguyên) ---
@@ -37,7 +52,7 @@ export function SimpleInput({ label, value, onChange, type = "text" }: SimpleInp
   );
 }
 
-export function SizeInput({ label, value, onChange, type = "number", isActive = false }: SimpleInputProps) {
+export function SizeInput({ label, value, onChange, type = "number", isActive = false }: SizeInputProps) {
   return (
     <div className="flex flex-row items-center justify-between font-display">
       <label className={`text-sm font-normal ${isActive ? "text-purple font-medium" : "text-tgray9"}`}>{label}</label>
@@ -53,6 +68,25 @@ export function SizeInput({ label, value, onChange, type = "number", isActive = 
   );
 }
 
+export function PrizeInput({ label, value, onChange, type = "text" }: PrizeInputProps) {
+  return (
+    <div className="flex flex-col gap-y-2.5 w-full font-display">
+      <label className="text-sm font-normal text-tgray9">{label}</label>
+    <div className="relative w-full">
+      <input
+        type={type}
+        className="w-full h-12 pl-2.5 pr-12 rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple transition-all"
+        value={value}
+        onChange={onChange}
+      />
+      
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none select-none">
+        VND
+      </span>
+    </div>
+    </div>
+  );
+}
 
 export function CustomSelect({
   label,
@@ -103,22 +137,13 @@ export function CustomSelect({
           {selectedOption ? selectedOption.label : placeholder || "Chọn..."}
         </span>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 13 7"
-          strokeWidth={1}
-          stroke="currentColor"
-          className={`w-[11.667px] h-[5.833px] text-tgray5 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12.1667 0.5L6.33333 6.33333L0.5 0.5"
+          <SmallArrowDownIcon
+            width={11.667}
+            height={5.833}
+            fill={"none"}
+            // Thêm className để xử lý việc xoay
+            className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           />
-        </svg>
       </div>
 
       {/* Dropdown Menu */}

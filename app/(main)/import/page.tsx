@@ -1,16 +1,15 @@
 "use client";
-import { ImageUpload } from "@/assests/Icons"
-import { Button } from "@/components/button";
+import { Button } from "@/components/ButtonComponent";
+import ImageUploader from "@/components/ImageUploader";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
 import { SizeInput } from "@/components/FormInput";
+import { PrizeInput } from "@/components/FormInput";
 import { useState, useMemo, useRef } from 'react';
 import ProductTable from "@/components/ProductTable";
 
 export default function ImportPage () {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const handleUpload = () => {
         fileInputRef.current?.click();
@@ -18,18 +17,21 @@ export default function ImportPage () {
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            // Tạo URL xem trước ảnh
-            const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
-            setImageFile(file);
-            
-            // Log để kiểm tra
             console.log("File đã chọn:", file); 
         }
     };
 
+
+    const handleImageSelect = (file: File) => {
+    console.log("File đã chọn:", file);
+    // Tại đây bạn có thể gọi API upload hoặc generate URL preview
+    // const previewUrl = URL.createObjectURL(file);
+    };
+
     const [productCode, setProductCode] = useState("");
     const [productName, setProductName] = useState("");
+    const [productPrizeIn, setPrizeIn] = useState("");
+    const [productPrizeOut, setPrizeOut] = useState("");
     const [isNumberMode, setIsNumberMode] = useState(true);
 
     const [selectedCategories, setSelectedCategories] = useState<string | number | undefined>(undefined);
@@ -45,17 +47,25 @@ export default function ImportPage () {
         }));
     };
 
+    const formatCurrency = (value: string) => {
+        if (!value) return "";
+        const numberString = value.replace(/\D/g, ""); 
+        return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
+
     const isFormValid = useMemo(() => {
         const hasAtLeastOneSize = Object.values(quantities).some(qty => qty > 0);
         return (
             productCode.trim() !== "" &&       // Mã không rỗng
             productName.trim() !== "" &&       // Tên không rỗng
+            productPrizeIn.trim() !== "" && 
+            productPrizeOut.trim() !== "" &&
             selectedCategories &&              // Đã chọn phân loại
             selectedColors &&                  // Đã chọn màu
             selectedPattern &&                 // Đã chọn hoạ tiết
             hasAtLeastOneSize                  
         );
-    }, [productCode, productName, selectedCategories, selectedColors, selectedPattern, quantities]);
+    }, [productCode, productName, productPrizeIn, productPrizeOut, selectedCategories, selectedColors, selectedPattern, quantities]);
 
   // Chọn danh sách hiển thị dựa vào state
     const sizesNumber = ["Freesize", "30", "34", "38", "28", "32", "36", "40"];
@@ -83,6 +93,8 @@ export default function ImportPage () {
       category: "Đầm",
       color: "Đen",
       pattern: "Hoa văn",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
     },
     {
       id: "QUAN-0501",
@@ -90,6 +102,8 @@ export default function ImportPage () {
       category: "Quần",
       color: "Xanh",
       pattern: "Trơn",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
     },
     {
       id: "AOTHUN-051",
@@ -97,6 +111,8 @@ export default function ImportPage () {
       category: "Áo",
       color: "Đỏ",
       pattern: "Sọc",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
     },
   ];
 
@@ -111,7 +127,7 @@ export default function ImportPage () {
                     <div className="flex flex-col h-auto items-start gap-y-2.5">
                         <div className="text-lg font-normal">Hình ảnh sản phẩm</div>
                         <div className="w-103.75 items-start gap-y-2.5">
-                            <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
+                            {/* <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
                                 <ImageUpload width={57.4} height={54.56} fill={"none"}/>
                                 <div className="text-xl font-normal  text-picture">Kéo & thả hình ảnh muốn tải lên</div>
                                 <div onClick={handleUpload} className="text-lg font-medium underline decoration-solid decoration-auto text-picture cursor-pointer">hoặc từ máy tính của bạn</div>
@@ -123,7 +139,15 @@ export default function ImportPage () {
                                     className="hidden" // Class hidden của Tailwind để ẩn input
                                     accept="image/*"   // Chỉ cho phép chọn ảnh
                                 />
-                            </div>
+                            </div> */}
+                            <ImageUploader onFileSelect={handleImageSelect} />
+                            <input 
+                                type="file" 
+                                ref={fileInputRef} 
+                                onChange={onFileChange} 
+                                className="hidden" 
+                                accept="image/*" 
+                            />
                         </div>
                     </div>
                     {/* div 2.2 Nhập thông tin */}
@@ -149,14 +173,35 @@ export default function ImportPage () {
                             <SimpleInput 
                                 label="Mã sản phẩm" 
                                 value={productCode}
+                                type="text"
                                 onChange={(e) => setProductCode(e.target.value)}
                             />
                             <SimpleInput 
                                 label="Tên sản phẩm" 
                                 value={productName}
+                                type="text"
                                 onChange={(e) => setProductName(e.target.value)}
                             />
-
+                            <div className="flex flex-row justify-between w-full gap-x-5 items-center">
+                                <PrizeInput 
+                                    label="Giá bán" 
+                                    value={productPrizeIn} 
+                                    type="text" 
+                                    onChange={(e) => {
+                                        const formattedValue = formatCurrency(e.target.value);
+                                        setPrizeIn(formattedValue);
+                                    }}
+                                />
+                                <PrizeInput 
+                                    label="Giá bán" 
+                                    value={productPrizeOut}
+                                    type="text"
+                                    onChange={(e) => {
+                                        const formattedValue = formatCurrency(e.target.value);
+                                        setPrizeOut(formattedValue);
+                                    }}
+                                />
+                            </div>
                             <div className="flex justify-between self-stretch gap-2.5">
                                 <CustomSelect
                                     label="Phân loại"
@@ -211,13 +256,18 @@ export default function ImportPage () {
                                     </button>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-4 gap-x-20 gap-y-6 w-full py-2.5">
+                            <div className="grid grid-cols-4 gap-x-12 gap-y-6 w-full py-2.5">
                                 {currentSizes.map((size, index) => (
                                 <div key={index}>
                                     <SizeInput 
                                         label={size}
-                                        value={(quantities[size] || 0).toString()}
-                                        onChange={(e: any) => handleQuantityChange(size, e.target.value)}
+                                        value={String((quantities[size]) || 0)}
+                                        type="number"
+                                        onChange={(e) => {
+                                            const cleanVal = e.target.value.replace(/[^0-9]/g, '');
+                                            const numVal = cleanVal === '' ? 0 : Number(cleanVal);
+                                           handleQuantityChange(size, String(numVal));
+                                        }}
                                         isActive = {quantities[size] > 0}
                                     />
                                 </div>
