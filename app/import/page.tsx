@@ -9,8 +9,6 @@ import ProductTable from "@/components/ProductTable";
 
 export default function ImportPage () {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const handleUpload = () => {
         fileInputRef.current?.click();
@@ -18,12 +16,6 @@ export default function ImportPage () {
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            // Tạo URL xem trước ảnh
-            const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
-            setImageFile(file);
-            
-            // Log để kiểm tra
             console.log("File đã chọn:", file); 
         }
     };
