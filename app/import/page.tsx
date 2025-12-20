@@ -114,7 +114,7 @@ export default function ImportPage () {
                             <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
                                 <ImageUpload width={57.4} height={54.56} fill={"none"}/>
                                 <div className="text-xl font-normal  text-picture">Kéo & thả hình ảnh muốn tải lên</div>
-                                <div className="text-lg font-medium underline decoration-solid decoration-auto text-picture">hoặc từ máy tính của bạn</div>
+                                <div onClick={handleUpload} className="text-lg font-medium underline decoration-solid decoration-auto text-picture cursor-pointer">hoặc từ máy tính của bạn</div>
                                 <div className="text-lg font-medium underline decoration-solid decoration-auto text-picture">hoặc từ điện thoại của bạn</div>
                                 <input 
                                     type="file" 
