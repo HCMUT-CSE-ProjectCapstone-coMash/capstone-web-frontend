@@ -6,6 +6,7 @@ interface SimpleInputProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: "text" | "number";
+  isActive?: boolean;
 }
 
 interface Option {
@@ -36,13 +37,14 @@ export function SimpleInput({ label, value, onChange, type = "text" }: SimpleInp
   );
 }
 
-export function SizeInput({ label, value, onChange, type = "number" }: SimpleInputProps) {
+export function SizeInput({ label, value, onChange, type = "number", isActive = false }: SimpleInputProps) {
   return (
     <div className="flex flex-row items-center justify-between font-display">
-      <label className="text-sm font-normal text-tgray9">{label}</label>
+      <label className={`text-sm font-normal ${isActive ? "text-purple font-medium" : "text-tgray9"}`}>{label}</label>
       <input
         type={type}
-        className="w-17.5 h-7.5 px-2.5 text-center rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple focus:text-purple text-tgray5"
+        className={`w-17.5 h-7.5 px-2.5 text-center rounded-lg border-[0.5px] border-solid focus:outline-none
+            ${isActive? "text-purple border-purple ring-1 ring-purple" : "text-tgray5 border-tgray5 ring-1 focus:border-purple focus:ring-purple focus:text-purple"}`}
         value={value}
         defaultValue={0}
         onChange={onChange}
