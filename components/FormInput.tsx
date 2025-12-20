@@ -3,9 +3,10 @@ import { SmallArrowDownIcon } from "@/assests/Icons";
 
 interface SimpleInputProps {
   label: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type: "text" ;
+  value: string;
+  placeHolder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: "text" | "password" ;
   isActive?: boolean;
 }
 
@@ -38,12 +39,13 @@ interface SizeInputProps {
 }
 
 // --- SimpleInput (Giữ nguyên) ---
-export function SimpleInput({ label, value, onChange, type = "text" }: SimpleInputProps) {
+export function SimpleInput({ label, value, onChange, type, placeHolder }: SimpleInputProps) {
   return (
     <div className="flex flex-col gap-y-2.5 w-full font-display">
       <label className="text-sm font-normal text-tgray9">{label}</label>
       <input
         type={type}
+        placeholder={placeHolder}
         className="w-full h-12 px-2.5 rounded-lg border-[0.5px] border-solid border-tgray5 focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple transition-all"
         value={value}
         onChange={onChange}

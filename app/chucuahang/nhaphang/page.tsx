@@ -172,12 +172,14 @@ export default function ImportPage () {
                         <div className="flex flex-col py-2.5 items-start gap-5">
                             <SimpleInput 
                                 label="Mã sản phẩm" 
+                                placeHolder=""
                                 value={productCode}
                                 type="text"
                                 onChange={(e) => setProductCode(e.target.value)}
                             />
                             <SimpleInput 
                                 label="Tên sản phẩm" 
+                                placeHolder=""
                                 value={productName}
                                 type="text"
                                 onChange={(e) => setProductName(e.target.value)}
