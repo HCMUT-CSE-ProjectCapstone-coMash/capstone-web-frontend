@@ -226,7 +226,7 @@ export default function ImportPage () {
                         </div>
                         <div className="mt-2.5 flex justify-end">
                             <Button
-                                onClick={handleUpload}
+                                // onClick={}
                                 disabled={!isFormValid} // Vô hiệu hóa nút nếu form chưa điền đủ
                                 className={`
                                     transition-colors duration-300
@@ -246,7 +246,7 @@ export default function ImportPage () {
                     <ProductTable data={products}/>
                     <div className="flex justify-end">
                         <Button 
-                            onClick={handleUpload}
+                            // onClick={}
                             disabled={products.length === 0}
                             className={`transition-colors duration-300
                             ${products.length > 0 
