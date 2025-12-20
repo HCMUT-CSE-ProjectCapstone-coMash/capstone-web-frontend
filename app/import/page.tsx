@@ -1,6 +1,6 @@
 "use client";
-import { ImageUpload } from "@/assests/Icons"
 import { Button } from "@/components/ButtonComponent";
+import ImageUploader from "@/components/ImageUploader";
 import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
 import { SizeInput } from "@/components/FormInput";
@@ -19,6 +19,13 @@ export default function ImportPage () {
         if (file) {
             console.log("File đã chọn:", file); 
         }
+    };
+
+
+    const handleImageSelect = (file: File) => {
+    console.log("File đã chọn:", file);
+    // Tại đây bạn có thể gọi API upload hoặc generate URL preview
+    // const previewUrl = URL.createObjectURL(file);
     };
 
     const [productCode, setProductCode] = useState("");
@@ -120,7 +127,7 @@ export default function ImportPage () {
                     <div className="flex flex-col h-auto items-start gap-y-2.5">
                         <div className="text-lg font-normal">Hình ảnh sản phẩm</div>
                         <div className="w-103.75 items-start gap-y-2.5">
-                            <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
+                            {/* <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
                                 <ImageUpload width={57.4} height={54.56} fill={"none"}/>
                                 <div className="text-xl font-normal  text-picture">Kéo & thả hình ảnh muốn tải lên</div>
                                 <div onClick={handleUpload} className="text-lg font-medium underline decoration-solid decoration-auto text-picture cursor-pointer">hoặc từ máy tính của bạn</div>
@@ -132,7 +139,15 @@ export default function ImportPage () {
                                     className="hidden" // Class hidden của Tailwind để ẩn input
                                     accept="image/*"   // Chỉ cho phép chọn ảnh
                                 />
-                            </div>
+                            </div> */}
+                            <ImageUploader onFileSelect={handleImageSelect} />
+                            <input 
+                                type="file" 
+                                ref={fileInputRef} 
+                                onChange={onFileChange} 
+                                className="hidden" 
+                                accept="image/*" 
+                            />
                         </div>
                     </div>
                     {/* div 2.2 Nhập thông tin */}

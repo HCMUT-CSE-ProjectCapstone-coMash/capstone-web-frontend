@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 // 1. Định nghĩa kiểu dữ liệu cho MỘT sản phẩm (Product)
 export interface Product {
