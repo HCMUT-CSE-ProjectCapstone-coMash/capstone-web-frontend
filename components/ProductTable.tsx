@@ -1,33 +1,66 @@
+import React from 'react';
 
+// 1. Định nghĩa kiểu dữ liệu cho MỘT sản phẩm (Product)
+export interface Product {
+  id: string | number; // Dùng làm key   // Mã sản phẩm
+  name: string;
+  category: string;
+  color: string;
+  pattern: string;
+}
+
+// 2. Định nghĩa Props cho Component (nhận vào danh sách sản phẩm)
 interface ProductTableProps {
-    data?: any[]; // Nhận mảng dữ liệu từ ImportPage
+  data?: Product[]; // Dấu ? để không lỗi nếu quên truyền data
 }
 
 const ProductTable = ({ data = [] }: ProductTableProps) => {
-  // Dữ liệu mô phỏng theo hình ảnh
+  // Config header để code gọn hơn, tránh lặp lại class
+  const headers = [
+    "Mã sản phẩm", 
+    "Tên sản phẩm", 
+    "Phân loại", 
+    "Màu sắc", 
+    "Hoạ tiết"
+  ];
+
+  // Class chung cho các ô để dễ quản lý style
+  const cellClass = "py-4 text-black text-sm";
 
   return (
     <div className="w-full bg-white">
-      <table className="w-full min-w-200 text-center border-collapse">
+      <table className="w-full min-w-50 text-center border-collapse">
         <thead>
           <tr className="border-b border-black">
-            <th className="py-4 text-sm font-semibold text-black tracking-wide">Mã sản phẩm</th>
-            <th className="py-4 text-sm font-semibold text-black tracking-wide">Tên sản phẩm</th>
-            <th className="py-4 text-sm font-semibold text-black tracking-wide">Phân loại</th>
-            <th className="py-4 text-sm font-semibold text-black tracking-wide">Màu sắc</th>
-            <th className="py-4 text-sm font-semibold text-black tracking-wide">Hoạ tiết</th>
+            {headers.map((title, index) => (
+              <th 
+                key={index} 
+                className="py-4 text-sm font-semibold text-black tracking-wide"
+              >
+                {title}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {data.map((product, index) => (
-            <tr key={index} className="border-b border-tgray5">
-              <td className="py-4 text-black">{product.id}</td>
-              <td className="py-4 text-black">{product.name}</td>
-              <td className="py-4 text-black">{product.category}</td>
-              <td className="py-4 text-black">{product.color}</td>
-              <td className="py-4 text-black">{product.pattern}</td>
+          {data.length > 0 ? (
+            data.map((product) => (
+              <tr key={product.id} className="border-b border-tgray5 hover:bg-gray-50 transition-colors">
+                <td className={cellClass}>{product.id}</td>
+                <td className={cellClass}>{product.name}</td>
+                <td className={cellClass}>{product.category}</td>
+                <td className={cellClass}>{product.color}</td>
+                <td className={cellClass}>{product.pattern}</td>
+              </tr>
+            ))
+          ) : (
+            // Hiển thị khi không có dữ liệu
+            <tr>
+              <td colSpan={headers.length} className="py-8 text-tgray5 italic">
+                Không có dữ liệu hiển thị
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

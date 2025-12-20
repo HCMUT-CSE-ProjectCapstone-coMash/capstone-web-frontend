@@ -220,7 +220,7 @@ export default function ImportPage () {
                                         label={size}
                                         value={(quantities[size] || 0)}
                                         type="number"
-                                        onChange={(e: any) => handleQuantityChange(size, e.target.value)}
+                                        onChange={(e) => handleQuantityChange(size, e.target.value)}
                                         isActive = {quantities[size] > 0}
                                     />
                                 </div>
