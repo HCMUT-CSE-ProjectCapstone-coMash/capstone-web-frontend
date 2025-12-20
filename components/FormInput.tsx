@@ -23,9 +23,9 @@ interface CustomSelectProps {
 
 interface SizeInputProps {
   label: string;
-  value: number;
+  value: number | string; // Sửa ở đây: cho phép cả number và string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type: "number" ;
+  type: "number";
   isActive?: boolean;
 }
 

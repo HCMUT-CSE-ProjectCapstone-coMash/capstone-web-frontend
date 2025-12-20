@@ -205,12 +205,12 @@ export default function ImportPage () {
                                     </button>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-4 gap-x-20 gap-y-6 w-full py-2.5">
+                            <div className="grid grid-cols-4 gap-x-12 gap-y-6 w-full py-2.5">
                                 {currentSizes.map((size, index) => (
                                 <div key={index}>
                                     <SizeInput 
                                         label={size}
-                                        value={(quantities[size] || 0)}
+                                        value={String((quantities[size]) || 0)}
                                         type="number"
                                         onChange={(e) => handleQuantityChange(size, e.target.value)}
                                         isActive = {quantities[size] > 0}
