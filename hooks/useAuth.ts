@@ -55,7 +55,7 @@ export function useAuth(redirectTo: string) {
         };
 
         fetchProfile();
-    }, [redirectTo, router, user]);
+    }, [redirectTo, router, user, dispatch]);
 
     return { loading };
 }

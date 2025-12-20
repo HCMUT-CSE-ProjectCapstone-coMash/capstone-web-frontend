@@ -5,29 +5,12 @@ import { SimpleInput } from "@/components/FormInput";
 import { CustomSelect } from "@/components/FormInput";
 import { SizeInput } from "@/components/FormInput";
 import { PrizeInput } from "@/components/FormInput";
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import ProductTable from "@/components/ProductTable";
+import Image from "next/image";
 
 export default function ImportPage () {
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const handleUpload = () => {
-        fileInputRef.current?.click();
-    };
-    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            console.log("File đã chọn:", file); 
-        }
-    };
-
-
-    const handleImageSelect = (file: File) => {
-    console.log("File đã chọn:", file);
-    // Tại đây bạn có thể gọi API upload hoặc generate URL preview
-    // const previewUrl = URL.createObjectURL(file);
-    };
-
+    const [images, setImages] = useState<File[]>([]);
     const [productCode, setProductCode] = useState("");
     const [productName, setProductName] = useState("");
     const [productPrizeIn, setPrizeIn] = useState("");
@@ -38,6 +21,41 @@ export default function ImportPage () {
     const [selectedColors, setSelectedColors] = useState<string | number | undefined>(undefined);
     const [selectedPattern, setSelectedPattern] = useState<string | number | undefined>(undefined);
     const [quantities, setQuantities] = useState<Record<string, number>>({});
+
+    const hasPredictedRef = useRef(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleImageSelect = (files: File[]) => {
+        setImages(prev => [...prev, ...files]);
+    };
+
+    const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files ?? []).filter(file =>
+            file.type.startsWith("image/")
+        );
+    
+        if (files.length > 0) {
+            setImages(prev => [...prev, ...files]);
+        }
+    
+        e.target.value = "";
+    };
+
+    const handleUpload = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handlePredict = async () => {
+
+    }
+    
+    useEffect(() => {
+        if (images.length === 0) return;
+        if (hasPredictedRef.current) return;
+
+        handlePredict();
+        hasPredictedRef.current = true;
+    }, [images]);
     
     const handleQuantityChange = (size: string, value: string) => {
         const numValue = parseInt(value) || 0;
@@ -67,92 +85,98 @@ export default function ImportPage () {
         );
     }, [productCode, productName, productPrizeIn, productPrizeOut, selectedCategories, selectedColors, selectedPattern, quantities]);
 
-  // Chọn danh sách hiển thị dựa vào state
+    // Chọn danh sách hiển thị dựa vào state
     const sizesNumber = ["Freesize", "30", "34", "38", "28", "32", "36", "40"];
     const sizesLetter = ["Freesize", "M", "XL", "3XL", "S", "L", "2XL", "4XL++"];
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
 
     const categories = [
-    { label: "Áo", value: "ao" },
-    { label: "Quần", value: "quan" },
-    { label: "Váy", value: "vay" },
-  ];
-  const colors = [
-    { label: "Đỏ", value: "do" },
-    { label: "Xanh", value: "xanh" },
-    { label: "Vàng", value: "vang" },
-  ];
-  const patternOptions = [
-    { label: "Trơn", value: "tron" },
-    { label: "Kẻ sọc", value: "ke_soc" },
-  ];
-  const products = [
-    {
-      id: "DAM-1203",
-      name: "Đầm đen dáng...",
-      category: "Đầm",
-      color: "Đen",
-      pattern: "Hoa văn",
-      prizeIn: "50.000 VND",
-      prizeOut: "100.000 VND"
-    },
-    {
-      id: "QUAN-0501",
-      name: "Quần jean dài",
-      category: "Quần",
-      color: "Xanh",
-      pattern: "Trơn",
-      prizeIn: "50.000 VND",
-      prizeOut: "100.000 VND"
-    },
-    {
-      id: "AOTHUN-051",
-      name: "Áo thun tay ngắn",
-      category: "Áo",
-      color: "Đỏ",
-      pattern: "Sọc",
-      prizeIn: "50.000 VND",
-      prizeOut: "100.000 VND"
-    },
-  ];
+        { label: "Áo", value: "ao" },
+        { label: "Quần", value: "quan" },
+        { label: "Váy", value: "vay" },
+    ];
+    const colors = [
+        { label: "Đỏ", value: "do" },
+        { label: "Xanh", value: "xanh" },
+        { label: "Vàng", value: "vang" },
+    ];
+    const patternOptions = [
+        { label: "Trơn", value: "tron" },
+        { label: "Kẻ sọc", value: "ke_soc" },
+    ];
+    const products = [
+        {
+            id: "DAM-1203",
+            name: "Đầm đen dáng...",
+            category: "Đầm",
+            color: "Đen",
+            pattern: "Hoa văn",
+            prizeIn: "50.000 VND",
+            prizeOut: "100.000 VND"
+        },
+        {
+            id: "QUAN-0501",
+            name: "Quần jean dài",
+            category: "Quần",
+            color: "Xanh",
+            pattern: "Trơn",
+            prizeIn: "50.000 VND",
+            prizeOut: "100.000 VND"
+        },
+        {
+            id: "AOTHUN-051",
+            name: "Áo thun tay ngắn",
+            category: "Áo",
+            color: "Đỏ",
+            pattern: "Sọc",
+            prizeIn: "50.000 VND",
+            prizeOut: "100.000 VND"
+        },
+    ];
 
     return (
         <div className="font-display">
-            <div className="flex flex-col justify-center mt-5 mb-5 px-25 gap-y-12.5"> 
+            <div className="flex flex-col justify-center mt-5 mb-5 px-25 gap-y-5"> 
                 {/* div 1 chữ Nhập hàng */}
                 <div className="text-3xl font-semibold text-purple">Nhập hàng</div>
                 {/* div 2 tải hình ảnh và các trường thông tin */}
                 <div className="flex flex-row self-stretch gap-x-52.5">
                     {/* div 2.1 tải hình ảnh */}
-                    <div className="flex flex-col h-auto items-start gap-y-2.5">
+                    <div className="flex flex-col h-auto items-start gap-y-2">
                         <div className="text-lg font-normal">Hình ảnh sản phẩm</div>
-                        <div className="w-103.75 items-start gap-y-2.5">
-                            {/* <div className="bg-tgray05 flex flex-col h-118.75 shrink-0 self-stretch content-center items-center justify-center gap-x-2 gap-y-5">
-                                <ImageUpload width={57.4} height={54.56} fill={"none"}/>
-                                <div className="text-xl font-normal  text-picture">Kéo & thả hình ảnh muốn tải lên</div>
-                                <div onClick={handleUpload} className="text-lg font-medium underline decoration-solid decoration-auto text-picture cursor-pointer">hoặc từ máy tính của bạn</div>
-                                <div className="text-lg font-medium underline decoration-solid decoration-auto text-picture">hoặc từ điện thoại của bạn</div>
-                                <input 
-                                    type="file" 
-                                    ref={fileInputRef} 
-                                    onChange={onFileChange} 
-                                    className="hidden" // Class hidden của Tailwind để ẩn input
-                                    accept="image/*"   // Chỉ cho phép chọn ảnh
-                                />
-                            </div> */}
-                            <ImageUploader onFileSelect={handleImageSelect} />
-                            <input 
-                                type="file" 
-                                ref={fileInputRef} 
-                                onChange={onFileChange} 
-                                className="hidden" 
-                                accept="image/*" 
-                            />
+                        <div className="w-103.75 items-start">
+                            {images.length === 0 ? (
+                                <ImageUploader onFileSelect={handleImageSelect} />
+                            ) : (
+                                <>
+                                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border">
+                                        <Image src={URL.createObjectURL(images[0])} alt="main-preview" fill className="object-cover" unoptimized/>
+                                    </div>
+
+                                    <div className="flex gap-2 mt-5">
+                                    {images.slice(1, 4).map((file, index) => (
+                                        <div
+                                            key={index}
+                                            className="relative w-30 h-30 rounded-md overflow-hidden border cursor-pointer"
+                                        >
+                                            <Image src={URL.createObjectURL(file)} alt={`thumb-${index}`} fill className="object-cover" unoptimized/>
+                                        </div>
+                                    ))}
+
+                                    {images.length > 4 && (
+                                        <div className="relative w-30 h-30 rounded-md overflow-hidden border bg-black/60 flex items-center justify-center text-white text-sm">
+                                            + {images.length - 4}
+                                        </div>
+                                    )}
+                                    </div>
+                                </>
+                            )}
+                            <input type="file" ref={fileInputRef} onChange={onFileChange} className="hidden" accept="image/*" multiple/>
                         </div>
                     </div>
                     {/* div 2.2 Nhập thông tin */}
                     <div className="flex flex-col flex-1 gap-y-2.5">
-                        <div className="flex py-2.5 justify-between items-center self-stretch">
+                        <div className="flex justify-between items-center self-stretch">
                             <div className="text-lg">Thông tin sản phẩm</div>
                             <div className="flex justify-center items-center gap-x-2.5">
                                 <Button 
@@ -186,7 +210,7 @@ export default function ImportPage () {
                             />
                             <div className="flex flex-row justify-between w-full gap-x-5 items-center">
                                 <PrizeInput 
-                                    label="Giá bán" 
+                                    label="Giá nhập" 
                                     value={productPrizeIn} 
                                     type="text" 
                                     onChange={(e) => {
