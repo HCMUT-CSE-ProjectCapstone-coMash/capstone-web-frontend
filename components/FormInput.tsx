@@ -91,7 +91,7 @@ export function CustomSelect({
           ${
             isOpen
               ? "border-purple ring-1 ring-purple"
-              : "border-tgray5 hover:border-purple-400"
+              : "border-tgray5"
           }
         `}
       >
@@ -106,17 +106,17 @@ export function CustomSelect({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          viewBox="0 0 13 7"
+          strokeWidth={1}
           stroke="currentColor"
-          className={`w-5 h-5 text-purple transition-transform duration-200 ${
+          className={`w-[11.667px] h-[5.833px] text-tgray5 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="m4.5 15.75 7.5-7.5 7.5 7.5"
+            d="M12.1667 0.5L6.33333 6.33333L0.5 0.5"
           />
         </svg>
       </div>
