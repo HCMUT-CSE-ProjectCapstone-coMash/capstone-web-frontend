@@ -99,16 +99,13 @@ export default function ImportPage () {
   const colors = [
     { label: "Đen", value: "black" },
     { label: "Trắng", value: "white" },
-    { label: "Xám", value: "gray" },
     { label: "Đỏ", value: "red" },
     { label: "Cam", value: "orange" },
     { label: "Vàng", value: "yellow" },
     { label: "Xanh Lá", value: "green" },
     { label: "Xanh Dương", value: "blue" },
-    { label: "Xanh Ngọc", value: "marine" },
     { label: "Tím", value: "purple" },
     { label: "Hồng", value: "pink" },
-    { label: "Nâu", value: "brown" },
   ];
   const patternOptions = [
     { label: "Trơn", value: "plain" },
