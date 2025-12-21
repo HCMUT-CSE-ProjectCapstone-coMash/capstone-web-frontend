@@ -91,48 +91,61 @@ export default function ImportPage () {
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
 
     const categories = [
-        { label: "Áo", value: "ao" },
-        { label: "Quần", value: "quan" },
-        { label: "Váy", value: "vay" },
-    ];
-    const colors = [
-        { label: "Đỏ", value: "do" },
-        { label: "Xanh", value: "xanh" },
-        { label: "Vàng", value: "vang" },
-    ];
-    const patternOptions = [
-        { label: "Trơn", value: "tron" },
-        { label: "Kẻ sọc", value: "ke_soc" },
-    ];
-    const products = [
-        {
-            id: "DAM-1203",
-            name: "Đầm đen dáng...",
-            category: "Đầm",
-            color: "Đen",
-            pattern: "Hoa văn",
-            prizeIn: "50.000 VND",
-            prizeOut: "100.000 VND"
-        },
-        {
-            id: "QUAN-0501",
-            name: "Quần jean dài",
-            category: "Quần",
-            color: "Xanh",
-            pattern: "Trơn",
-            prizeIn: "50.000 VND",
-            prizeOut: "100.000 VND"
-        },
-        {
-            id: "AOTHUN-051",
-            name: "Áo thun tay ngắn",
-            category: "Áo",
-            color: "Đỏ",
-            pattern: "Sọc",
-            prizeIn: "50.000 VND",
-            prizeOut: "100.000 VND"
-        },
-    ];
+    { label: "Đầm", value: "dress" },
+    { label: "Áo", value: "shirt" },
+    { label: "Quần", value: "pants" },
+    { label: "Váy", value: "skirt" },
+  ];
+  const colors = [
+    { label: "Đen", value: "black" },
+    { label: "Trắng", value: "white" },
+    { label: "Xám", value: "gray" },
+    { label: "Đỏ", value: "red" },
+    { label: "Cam", value: "orange" },
+    { label: "Vàng", value: "yellow" },
+    { label: "Xanh Lá", value: "green" },
+    { label: "Xanh Dương", value: "blue" },
+    { label: "Xanh Ngọc", value: "marine" },
+    { label: "Tím", value: "purple" },
+    { label: "Hồng", value: "pink" },
+    { label: "Nâu", value: "brown" },
+  ];
+  const patternOptions = [
+    { label: "Trơn", value: "plain" },
+    { label: "Sọc Dọc", value: "striped" },
+    { label: "Sọc Ngang", value: "horizontal_striped" },
+    { label: "Caro", value: "caro" },
+    { label: "Hoa Văn", value: "flower" },
+  ];
+  const products = [
+    {
+      id: "DAM-1203",
+      name: "Đầm đen dáng...",
+      category: "Đầm",
+      color: "Đen",
+      pattern: "Hoa văn",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
+    },
+    {
+      id: "QUAN-0501",
+      name: "Quần jean dài",
+      category: "Quần",
+      color: "Xanh",
+      pattern: "Trơn",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
+    },
+    {
+      id: "AOTHUN-051",
+      name: "Áo thun tay ngắn",
+      category: "Áo",
+      color: "Đỏ",
+      pattern: "Sọc",
+      prizeIn: "50.000 VND",
+      prizeOut: "100.000 VND"
+    },
+  ];
 
     return (
         <div className="font-display">
