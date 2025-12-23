@@ -8,6 +8,10 @@ import { PrizeInput } from "@/components/FormInput";
 import { useState, useMemo, useEffect, useRef } from 'react';
 import ProductTable from "@/components/ProductTable";
 import Image from "next/image";
+import axiosAIClient from "@/api/axiosAIClient";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import getNextProductCode from "@/ultis/getNextProductCode";
 
 export default function ImportPage () {
     const [images, setImages] = useState<File[]>([]);
@@ -21,6 +25,10 @@ export default function ImportPage () {
     const [selectedColors, setSelectedColors] = useState<string | number | undefined>(undefined);
     const [selectedPattern, setSelectedPattern] = useState<string | number | undefined>(undefined);
     const [quantities, setQuantities] = useState<Record<string, number>>({});
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const products = useSelector((state: RootState) => state.product.products);
 
     const hasPredictedRef = useRef(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -44,18 +52,38 @@ export default function ImportPage () {
     const handleUpload = () => {
         fileInputRef.current?.click();
     };
-
-    const handlePredict = async () => {
-
-    }
     
     useEffect(() => {
         if (images.length === 0) return;
         if (hasPredictedRef.current) return;
 
+        const handlePredict = async () => {
+            if (loading) return;
+    
+            try {
+                setLoading(true);
+    
+                const formData = new FormData();
+                formData.append("file", images[0]);
+    
+                const response = await axiosAIClient.post("/predict", formData);
+
+                const newCode = getNextProductCode(products, response.data.clothType);
+                setProductCode(newCode);
+                setProductName(response.data.clothType + " " + response.data.color);
+                setSelectedCategories(response.data.clothType);
+                setSelectedColors(response.data.color);
+                setSelectedPattern("Trơn");
+            } catch {
+    
+            } finally {
+                setLoading(false);
+            }
+        }
+
         handlePredict();
         hasPredictedRef.current = true;
-    }, [images]);
+    }, [images, loading, products]);
     
     const handleQuantityChange = (size: string, value: string) => {
         const numValue = parseInt(value) || 0;
@@ -91,58 +119,29 @@ export default function ImportPage () {
     const currentSizes = isNumberMode ? sizesNumber : sizesLetter;
 
     const categories = [
-    { label: "Đầm", value: "dress" },
-    { label: "Áo", value: "shirt" },
-    { label: "Quần", value: "pants" },
-    { label: "Váy", value: "skirt" },
-  ];
-  const colors = [
-    { label: "Đen", value: "black" },
-    { label: "Trắng", value: "white" },
-    { label: "Đỏ", value: "red" },
-    { label: "Cam", value: "orange" },
-    { label: "Vàng", value: "yellow" },
-    { label: "Xanh Lá", value: "green" },
-    { label: "Xanh Dương", value: "blue" },
-    { label: "Tím", value: "purple" },
-    { label: "Hồng", value: "pink" },
-  ];
-  const patternOptions = [
-    { label: "Trơn", value: "plain" },
-    { label: "Sọc Dọc", value: "striped" },
-    { label: "Sọc Ngang", value: "horizontal_striped" },
-    { label: "Caro", value: "caro" },
-    { label: "Hoa Văn", value: "flower" },
-  ];
-  const products = [
-    {
-      id: "DAM-1203",
-      name: "Đầm đen dáng...",
-      category: "Đầm",
-      color: "Đen",
-      pattern: "Hoa văn",
-      prizeIn: "50.000 VND",
-      prizeOut: "100.000 VND"
-    },
-    {
-      id: "QUAN-0501",
-      name: "Quần jean dài",
-      category: "Quần",
-      color: "Xanh",
-      pattern: "Trơn",
-      prizeIn: "50.000 VND",
-      prizeOut: "100.000 VND"
-    },
-    {
-      id: "AOTHUN-051",
-      name: "Áo thun tay ngắn",
-      category: "Áo",
-      color: "Đỏ",
-      pattern: "Sọc",
-      prizeIn: "50.000 VND",
-      prizeOut: "100.000 VND"
-    },
-  ];
+        { label: "Đầm", value: "Đầm" },
+        { label: "Áo", value: "Áo" },
+        { label: "Quần", value: "Quần" },
+        { label: "Váy", value: "Váy" },
+    ];
+    const colors = [
+        { label: "Đen", value: "Đen" },
+        { label: "Trắng", value: "Trắng" },
+        { label: "Đỏ", value: "Đỏ" },
+        { label: "Cam", value: "Cam" },
+        { label: "Vàng", value: "Vàng" },
+        { label: "Xanh Lá", value: "Xanh Lá" },
+        { label: "Xanh Dương", value: "Xanh Dương" },
+        { label: "Tím", value: "Tím" },
+        { label: "Hồng", value: "Hồng" },
+    ];
+    const patternOptions = [
+        { label: "Trơn", value: "Trơn" },
+        { label: "Sọc Dọc", value: "Sọc Dọc" },
+        { label: "Sọc Ngang", value: "Sọc Ngang" },
+        { label: "Caro", value: "Caro" },
+        { label: "Hoa Văn", value: "Hoa Văn" },
+    ];
 
     return (
         <div className="font-display">
@@ -245,7 +244,6 @@ export default function ImportPage () {
                                     options={categories}
                                     value={selectedCategories}
                                     onChange={(val) => {
-                                        console.log("Giá trị đã chọn:", val);
                                         setSelectedCategories(val)
                                     }}
                                 />
@@ -255,7 +253,6 @@ export default function ImportPage () {
                                     options={colors}
                                     value={selectedColors}
                                     onChange={(val) => {
-                                        console.log("Giá trị đã chọn:", val);
                                         setSelectedColors(val)
                                     }}
                                 />
@@ -265,7 +262,6 @@ export default function ImportPage () {
                                     options={patternOptions}
                                     value={selectedPattern}
                                     onChange={(val) => {
-                                        console.log("Giá trị đã chọn:", val);
                                         setSelectedPattern(val)
                                     }}
                                 />

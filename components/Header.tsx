@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/assests/Icons";
+import { BellIcon, ArrowDownIcon, UserProfileIcon } from "@/public/assests/Icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 

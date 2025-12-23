@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { ImageUpload } from '@/assests/Icons';
-
+import { ImageUpload } from '@/public/assests/Icons';
 
 interface ImageUploaderProps {
   onFileSelect: (files: File[]) => void; // Hàm callback trả file về cho cha

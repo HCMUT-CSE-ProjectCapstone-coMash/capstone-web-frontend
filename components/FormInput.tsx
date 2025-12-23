@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { SmallArrowDownIcon } from "@/assests/Icons";
+import { SmallArrowDownIcon } from "@/public/assests/Icons";
 
 interface SimpleInputProps {
   label: string;
