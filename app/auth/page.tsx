@@ -35,7 +35,7 @@ export default function LoginPage() {
             localStorage.setItem("token", response.data.token);
 
             if (response.data.role === "shopowner") {
-                router.replace("/chucuahang");
+                router.replace("/chucuahang/nhaphang");
             } else {
                 router.replace("/nhanvien");
             }

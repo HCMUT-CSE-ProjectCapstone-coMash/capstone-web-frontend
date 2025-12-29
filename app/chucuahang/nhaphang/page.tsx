@@ -19,7 +19,7 @@ export default function ImportPage () {
     const [productName, setProductName] = useState("");
     const [productPrizeIn, setPrizeIn] = useState("");
     const [productPrizeOut, setPrizeOut] = useState("");
-    const [isNumberMode, setIsNumberMode] = useState(true);
+    const [isNumberMode, setIsNumberMode] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string | number | undefined>(undefined);
     const [selectedColors, setSelectedColors] = useState<string | number | undefined>(undefined);
@@ -73,7 +73,6 @@ export default function ImportPage () {
                 setProductName(response.data.clothType + " " + response.data.color);
                 setSelectedCategories(response.data.clothType);
                 setSelectedColors(response.data.color);
-                setSelectedPattern("Trơn");
             } catch {
     
             } finally {
